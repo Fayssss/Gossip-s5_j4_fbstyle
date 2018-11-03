@@ -1,0 +1,102 @@
+<html>
+<%= render "shared/header" %>
+
+  <body class="bg-secondary text-light">
+  <div class="container">
+  <div class="row">
+  
+
+    <div class="col-md-6"><br/><br/>
+      <!-- Affichage du potin -->
+      
+      <h2>Titre : <%= @good_gossip.title %></h2>
+      <small>Potin n°<%= @good_gossip.id%></small>
+      <small>Son auteur est <%= @good_gossip.user.first_name %> <%= @good_gossip.user.last_name %></small>
+      <small>Date de création :  <%= @good_gossip.date %></small><br/><br/>
+      <h5>#Balancetongossip : "<%= @good_gossip.content %>"</h5>
+      
+      <!-- Like -->
+      <p class = flex-row>
+        <%= @good_gossip.likes.count %> personne(s) ont déjà liké
+        <br/>
+      </p>
+      <div class="container-fluid">
+        <div class= "justify-content-end" >
+        <p> 
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          
+          <% if @current_user == nil%>
+            <%= link_to "Enregistre-toi pour pouvoir liker!", '/registration/new', class: "btn btn-lg btn-primary" %>
+          <% elsif @good_gossip.likes.where( :user_id == session[:id]).first%>
+            <%= link_to 'Enlever le like', "/like/"+@good_gossip.likes.where( :user_id == session[:id]).first.id.to_s , data: {:confirm => 'Êtes-vous sûr?'}, class: "btn btn-outline-success bg-info text-light", :method => :delete %>
+          <% else%>
+            <%= form_for @good_like, :url => '/gossip/like', html: {class: "col-md-6"} do |f| %>
+              <%=hidden_field_tag "gossip_id", @good_gossip.id%>
+            <%= f.submit "Like", class: "btn btn-outline-success bg-info text-light" %>
+            <% end %>
+        
+          <% end %> 
+        </p>
+        </div>
+
+        <!-- Boutons Retour à l'accueil, Editer le gossip, Détruire le gossip -->
+        <div class= "justify-content-between" >
+          <%= link_to "Retouner à l'index", '/gossip', class: "btn btn-success" %>
+          <%= link_to "Editer le gossip", '/gossip/'+@good_gossip.id.to_s+'/edit', class: "btn btn-success" %>
+          <%= link_to 'Détruire le gossip', @good_gossip, class: "btn btn-success", data: {:confirm => 'Êtes-vous sûr?'}, :method => :delete %>
+        </div>
+        <br/>
+      </div>
+     
+      <!-- Création de potin -->
+      <div>
+        <h6>Inscrivez votre commentaire ci-dessous</h6>
+		    <%= form_for @good_comment, :url => "/comment", html: {class: "col-md-6"} do |f| %>
+			    <%=hidden_field_tag "gossip_id", @good_gossip.id%>			
+			    <div class=" form-row">
+				    <%= f.text_area :content, size: "30x3", placeholder: 'Haha, super ce potin', class: "form-control" %>
+          </div>
+			    <div class=" form-group  text-light">
+				    <%= f.submit "Valider", class: "btn btn-outline-success bg-info btn-block align-items-stretch	text-light" %>
+			    </div>
+		    <% end %>
+      </div>
+    
+    </div><br/>
+      
+    
+
+   <!-- Affichage du comment -->
+    <div class="col-md-6"><br/><br/>
+      <% @good_coms.each do |comment| %>
+        <div class = "card" style = "width: 100%;">
+        <div class="bg-light text-dark">
+        <div class = "card-body">
+        <h6 class = "card-text">
+          <small>Commentaire<br/>L'auteur: <%= comment.user.first_name %> <%= comment.user.last_name %></small><br/>
+          <%= comment.content %>
+        </h6>
+        <div class="container">
+        <p class= "justify-content-between">
+          <small><a href="/comment/<%= comment.id%>/edit" class="card-link">Editer le commentaire ici</a> &nbsp;&nbsp;&nbsp;&nbsp;   
+          <%= link_to "Commenter", new_comment_path(:comment_id => comment.id) %> </small>        
+        </p>
+        </div>
+        <% comment.comments.each do |comment| %>
+          <div class = "justify-content-end">
+          <p class = "card-text ">
+            <small>Sous-commentaire<br/>L'auteur: <%= comment.user.first_name %> <%= comment.user.last_name %></small><br/>
+            <%= comment.content %>
+          </p>
+          </div>
+        <% end %> 
+        </div>
+        </div>
+        </div><br/><br/>
+      <% end %> 
+    
+    </div>
+    </div>
+  </div>
+  </div>
+  </body>
+</html>

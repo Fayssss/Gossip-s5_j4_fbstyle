@@ -1,0 +1,27 @@
+<html>
+<%= render "shared/header" %>
+
+<section>
+  <div class="container-fluid bg-secondary ">
+    <div class= "text-light  d-flex align-content-end flex-wrap ">
+      <p class="p-6"><br/>Salut <%=@my_name_param.capitalize%>! Ici c'est notre super site de potins, il est chouette, non ?<br/></p>
+    </div>
+    <div class="container-fluid d-flex align-content-between justify-content-between flex-wrap">
+      <% @gossip.each do |gossip| %>
+        <div class = "card" style = "width: 25rem;">
+          <div class="bg-light text-dark">
+            <div class = "card-body">
+              <h6 class = "text-success">Gossip n°: <%= gossip.id%></h6>
+              <p class = "card-text">
+                Crée par: <%= gossip.user.first_name %> <%= gossip.user.last_name %><br/>
+                Titre : <%= gossip.title%><br/>
+                Le contenu :<%= gossip.content %><br/>
+                <a href="/gossip/<%= gossip.id %>" class="card-link">Lien ici</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

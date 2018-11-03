@@ -1,0 +1,35 @@
+<%= render "shared/header" %>
+
+<body class="bg-secondary text-light d-flex align-items-stretch flex-wrap">
+  <section class="container-fluid">
+    <div class= "text-light  d-flex align-content-end flex-wrap ">
+      <p class="p-6"><br/>Salut ! Ici c'est notre super index des potins, il est chouette, non ?<br/></p>
+    </div>
+    <div class="container-fluid d-flex align-content-between justify-content-between flex-wrap">
+      <% @gossip.each do |gossip| %>
+        <div class = "card" style = "width: 25rem;">
+          <div class="bg-light text-dark">
+            <div class = "card-body">
+              <h6 class = "text-success">Gossip n°: <%= gossip.id%></h6>
+              <p class = "card-text">
+                Ecrit par: <%= gossip.user.first_name %> <%= gossip.user.last_name %><br/>
+                Titre : <%= gossip.title%><br/>
+                Contenu : <%= gossip.content %><br/>
+                <small>
+                  Nombre de commentaire : <%=gossip.comments.count%><br/>
+                  Nombre de like : <%=gossip.likes.count%><br/>
+                </small>
+              </p>
+              <p class= "flex-wrap">
+                <a href="/gossip/<%= gossip.id %>" class="card-link">Lien vers le potin ici</a> 
+                <a href="/gossip/<%= gossip.id%>/edit" class="card-link">Editer le potin ici</a>
+
+              </p>
+            </div>
+          </div>
+        </div>
+        <br/>
+      <% end %> 
+    </div>
+  </section>
+</body>

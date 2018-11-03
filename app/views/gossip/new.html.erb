@@ -1,0 +1,29 @@
+<%= render "shared/header" %>
+
+<body class="bg-secondary text-light align-items-stretch ">
+	<div class="container-fluid">
+		<h3><br/>Pour inscrire votre potin, veuillez le rentrer ci-dessous</h3>
+		<div class="form-row">
+
+		<%= form_for @gossip, url: {action: "create"}, html: {class: "col-md-6"} do |f| %>
+			
+			<div class="col-md-6">
+				<div class="form-group">
+					<%= f.label "Le titre de votre gossip"%>
+					<%= f.text_field :title, placeholder: 'Ici, on fornique', class: "form-control" %>
+				</div>			
+			</div> 
+			
+
+			<div class="col-md-12 form-group">
+				<%= f.label "Le contenu de votre gossip"%>
+				<%= f.text_area :content, size: "30x3", placeholder: 'Haha, vous voudriez bien savoir hein?', class: "form-control" %>
+			</div>
+
+			<div class="col-md-12 form-group  text-light">
+				<%= f.submit "Valider", class: "btn btn-outline-success bg-info col-md-12 align-items-stretch	text-light" %>
+			</div>
+		<% end %>
+		</div>
+	</div>
+</body>

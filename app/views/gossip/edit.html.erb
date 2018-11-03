@@ -1,0 +1,51 @@
+<%= render "shared/header" %>
+
+<body class="bg-secondary text-light d-flex align-items-stretch flex-wrap">
+	<div class="container-fluid">
+		<h3><br/>Veuillez remplir le formulaire suivant pour éditer votre potin</h3>
+		<form  class= "col-md-6" action="/gossip/<%= @gossip.id %>" method="POST">
+			<input name="_method" type="hidden" value="patch" />
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="first_name">Nouveau prénom de l'auteur</label>
+					<input class="form-control" type="text" name="first_name" placeholder="jean">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="last_name">Nouveau nom de l'auteur</label>
+					<input class="form-control" type="text" name="last_name" placeholder="dupont">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="email">Nouvel email de l'auteur</label>
+					<input class="form-control" type="text" name="email" placeholder="jean.dupont@mail.com">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="city">Nouvelle ville de l'auteur	</label>
+					<input class="form-control" type="text" name="city" placeholder="Marseille">
+				</div>
+				<div class="form-group col-md-12">
+					<label for="postal">Code postal de la ville</label>
+					<input class="form-control" type="text" name="postal" placeholder="13000">
+				</div>
+			</div>
+
+			<div class="form-row ">
+				<div class="form-group col-md-12">
+					<label for="title">Nouveau titre du potin</label>
+					<input class="form-control" type="text" name="title" placeholder="On ne fornique plus">
+				</div>
+			</div>
+			
+			<div class="form-row flex-column">	
+				<div class="form-group col-md-12">
+					<label for="content">Nouveau contenu du potin</label>
+					<textarea class="form-control" rows="3" name="content" placeholder="Vous savoir quoi de plus? Voyeurs !"></textarea>
+				</div>
+
+				<div class="form-group col-md-12  align-items-stretch ">
+					<button type="submit" class="btn-block 	btn btn-outline-success bg-light" >Valider</button>
+				</div>
+			</div>
+		</form>
+	</div> 	
+</body>
